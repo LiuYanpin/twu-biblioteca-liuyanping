@@ -1,13 +1,31 @@
 package com.twu.biblioteca;
 
+import java.util.Scanner;
+
 public class BibliotecaApp {
+    private Menu allMenu = new Menu();
+
     {
         System.out.println("Welcome to the library!");
-        System.out.println("------------------");
-        Library publicLibrary = new Library();
-        publicLibrary.getAllBookList();
+        allMenu.getAllMenuList();
     }
+
+
     public static void main(String[] args) {
-        System.out.println("Welcome to the library!");
+        BibliotecaApp app = new BibliotecaApp();
+        System.out.println("Please input one of the options:");
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            String customerOption = scanner.nextLine();
+            if ("Quit".equals(customerOption)) {
+                break;
+            }
+            if (app.allMenu.ifCommandExist(customerOption)) {
+                app.allMenu.afterChooseOneCommand(customerOption);
+            }else {
+                System.out.println("Select a valid option!");
+            }
+        }
+
     }
 }

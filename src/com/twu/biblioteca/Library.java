@@ -19,7 +19,7 @@ String bookISBN, String bookName, String author, int yearPublished, int totalNum
  */
 
 public class Library {
-    private HashMap<String, Book> allBooks = new HashMap<String, Book>();
+    private HashMap<String, Book> allBooks = new HashMap<>();
 
     public Library() {
         initialLibrary();
@@ -58,7 +58,14 @@ public class Library {
         });
     }
 
-    public void getOneBookDetailByName(String bookName) {
-
+    public String getOneBookDetailByName(String bookISBN) {
+        if (allBooks.containsKey(bookISBN)) {
+            Book foundBook = allBooks.get(bookISBN);
+            String bookDetail = String.format("%-20s%-30s%-10d",
+                    foundBook.getBookName(), foundBook.getAuthor(), foundBook.getYearPublished());
+            return bookDetail;
+        }else {
+            return null;
+        }
     }
 }

@@ -10,5 +10,9 @@ public class BibliotecaAppTest {
         BibliotecaApp app = new BibliotecaApp();
     }
 
+    @Test
+    public void should_print_menu_list() {
+        BibliotecaApp app = new BibliotecaApp();
+    }
 
 }
