@@ -26,17 +26,33 @@ public class Library {
     }
 
     private void initialLibrary() {
-        Book book1 = new Book("0001", "Middlemarch", "George Eliot", 1874, 2);
-        Book book2 = new Book("0002", "To the Lighthouse", "Virginia Woolf", 1927, 1);
-        allBooks.put(book1.getBookISBN(), book1);
-        allBooks.put(book2.getBookISBN(), book2);
+        Book book01 = new Book("0001", "Middlemarch", "George Eliot", 1874, 1);
+        Book book02 = new Book("0002", "To the Lighthouse", "Virginia Woolf", 1927, 2);
+        Book book03 = new Book("0003", "Mrs Dalloway", "Virginia Woolf", 1925, 3);
+        Book book04 = new Book("0004", "Great Expectations", "Charles Dickens", 1861, 4);
+        Book book05 = new Book("0005", "Jane Eyre", "Charlotte Bronte", 1847, 1);
+        Book book06 = new Book("0006", "leak House", "Charles Dickens", 1853, 2);
+        Book book07 = new Book("0007", "Wuthering Heights", "Emily Bronte", 1847, 3);
+        Book book08 = new Book("0008", "David Copperfield", "Charles Dickens", 1850, 4);
+        Book book09 = new Book("0009", "Frankenstein", "Mary Shelley", 1818, 1);
+        Book book10 = new Book("0010", "Vanity Fair", "William Makepeace Thackeray", 1848, 2);
+        allBooks.put(book01.getBookISBN(), book01);
+        allBooks.put(book02.getBookISBN(), book02);
+        allBooks.put(book03.getBookISBN(), book03);
+        allBooks.put(book04.getBookISBN(), book04);
+        allBooks.put(book05.getBookISBN(), book05);
+        allBooks.put(book06.getBookISBN(), book06);
+        allBooks.put(book07.getBookISBN(), book07);
+        allBooks.put(book08.getBookISBN(), book08);
+        allBooks.put(book09.getBookISBN(), book09);
+        allBooks.put(book10.getBookISBN(), book10);
     }
 
     public void getAllBookList() {
-        String title = String.format("%-30s%-30s%-10s", "BookName", "Author", "PublishedYear");
+        String title = String.format("%-20s%-30s%-10s", "BookName", "Author", "PublishedYear");
         System.out.println(title);
         allBooks.forEach((bookISBN, oneBook) -> {
-            String oneBookDetail = String.format("%-30s%-30s%-10d",
+            String oneBookDetail = String.format("%-20s%-30s%-10d",
                     oneBook.getBookName(), oneBook.getAuthor(), oneBook.getYearPublished());
             System.out.println(oneBookDetail);
         });
