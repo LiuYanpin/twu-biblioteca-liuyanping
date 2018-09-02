@@ -1,13 +1,20 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Menu {
     private ArrayList<String> allCommands = new ArrayList<>();
+    private Library publicLibrary;
+
     public Menu() {
         allCommands.add("List Books");
         allCommands.add("Quit");
+    }
+
+    public Menu(Library publicLibrary) {
+        allCommands.add("List Books");
+        allCommands.add("Quit");
+        this.publicLibrary = publicLibrary;
     }
 
     public boolean ifCommandExist(String customerCommand) {
@@ -22,11 +29,15 @@ public class Menu {
     }
 
     public void afterChooseOneCommand(String customerCommand) {
-        if (customerCommand == "Quit") {
+        if ("Quit".equals(customerCommand)) {
             System.exit(1);
+        }else if ("List Books".equals(customerCommand)) {
+            publicLibrary.getAllBookList();
         }else {
-            System.out.println(customerCommand);
+            System.out.println("NoCommand");
         }
+
+
     }
 
 }

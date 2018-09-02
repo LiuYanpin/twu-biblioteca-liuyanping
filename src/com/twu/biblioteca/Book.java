@@ -7,8 +7,23 @@ public class Book {
     private int yearPublished;
     private int totalNumberOfTheBook;
     private int leftNumberOfTheBook;
+    public Book(String bookISBN, String bookName, String author, int yearPublished) {
+        this.bookISBN = bookISBN;
+        this.bookName = bookName;
+        this.author = author;
+        this.yearPublished = yearPublished;
+    }
 
     public Book(String bookISBN, String bookName, String author, int yearPublished, int totalNumberOfTheBook) {
+        this.bookISBN = bookISBN;
+        this.bookName = bookName;
+        this.author = author;
+        this.yearPublished = yearPublished;
+        this.totalNumberOfTheBook = totalNumberOfTheBook;
+        this.leftNumberOfTheBook = totalNumberOfTheBook;
+    }
+
+    public Book(String bookISBN, String bookName, String author, int yearPublished, int totalNumberOfTheBook, int leftNumberOfTheBook) {
         this.bookISBN = bookISBN;
         this.bookName = bookName;
         this.author = author;
@@ -63,4 +78,6 @@ public class Book {
     public void setLeftNumberOfTheBook(int leftNumberOfTheBook) {
         this.leftNumberOfTheBook = leftNumberOfTheBook;
     }
+
+
 }
