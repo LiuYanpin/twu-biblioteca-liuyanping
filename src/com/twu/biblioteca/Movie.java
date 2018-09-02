@@ -9,55 +9,15 @@ public class Movie {
     private int totalNumberOfTheMovie;
     private int leftNumberOfTheMovie;
 
-    public Movie(String movieIMDbNumber, String movieName, int movieReleasedYear, String directorName) {
-        this.movieIMDbNumber = movieIMDbNumber;
-        this.movieName = movieName;
-        this.movieReleasedYear = movieReleasedYear;
-        this.directorName = directorName;
-        this.movieRating = "unrated";
-        this.totalNumberOfTheMovie = 1;
-        this.leftNumberOfTheMovie = 1;
-    }
-
-    public Movie(String movieIMDbNumber, String movieName, int movieReleasedYear, String directorName, String movieRating) {
-        this.movieIMDbNumber = movieIMDbNumber;
-        this.movieName = movieName;
-        this.movieReleasedYear = movieReleasedYear;
-        this.directorName = directorName;
-        this.movieRating = movieRating;
-        this.totalNumberOfTheMovie = 1;
-        this.leftNumberOfTheMovie = 1;
-    }
-
-    public Movie(String movieIMDbNumber, String movieName, int movieReleasedYear, String directorName, int totalNumberOfTheMovie) {
-        this.movieIMDbNumber = movieIMDbNumber;
-        this.movieName = movieName;
-        this.movieReleasedYear = movieReleasedYear;
-        this.directorName = directorName;
-        this.movieRating = "unrated";
-        this.totalNumberOfTheMovie = totalNumberOfTheMovie;
-        this.leftNumberOfTheMovie = totalNumberOfTheMovie;
-    }
-
-    public Movie(String movieIMDbNumber, String movieName, int movieReleasedYear, String directorName, String movieRating, int totalNumberOfTheMovie) {
-        this.movieIMDbNumber = movieIMDbNumber;
-        this.movieName = movieName;
-        this.movieReleasedYear = movieReleasedYear;
-        this.directorName = directorName;
-        this.movieRating = movieRating;
-        this.totalNumberOfTheMovie = totalNumberOfTheMovie;
-        this.leftNumberOfTheMovie = totalNumberOfTheMovie;
-    }
-
-    public String getmovieIMDbNumber() {
+    public String getMovieIMDbNumber() {
         return movieIMDbNumber;
     }
 
-    public void setmovieIMDbNumber(String movieIMDbNumber) {
+    public void setMovieIMDbNumber(String movieIMDbNumber) {
         this.movieIMDbNumber = movieIMDbNumber;
     }
 
-    public String getBookIMDbNumber() {
+    public String getMovieName() {
         return movieName;
     }
 
@@ -88,6 +48,7 @@ public class Movie {
     public void setMovieRating(String movieRating) {
         this.movieRating = movieRating;
     }
+
     public int getTotalNumberOfTheMovie() {
         return totalNumberOfTheMovie;
     }
@@ -103,5 +64,43 @@ public class Movie {
     public void setLeftNumberOfTheMovie(int leftNumberOfTheMovie) {
         this.leftNumberOfTheMovie = leftNumberOfTheMovie;
     }
+
+
+    public Movie(String movieIMDbNumber, String movieName, int movieReleasedYear, String directorName) {
+        this.movieIMDbNumber = movieIMDbNumber;
+        this.movieName = movieName;
+        this.movieReleasedYear = movieReleasedYear;
+        this.directorName = directorName;
+        this.movieRating = "unrated";
+    }
+
+    public Movie(String movieIMDbNumber, String movieName, int movieReleasedYear, String directorName, String movieRating) {
+        this.movieIMDbNumber = movieIMDbNumber;
+        this.movieName = movieName;
+        this.movieReleasedYear = movieReleasedYear;
+        this.directorName = directorName;
+        this.movieRating = movieRating;
+    }
+
+    public Movie(String movieIMDbNumber, String movieName, int movieReleasedYear, String directorName, int totalNumberOfTheMovie) {
+        this.movieIMDbNumber = movieIMDbNumber;
+        this.movieName = movieName;
+        this.movieReleasedYear = movieReleasedYear;
+        this.directorName = directorName;
+        this.movieRating = "unrated";
+        this.totalNumberOfTheMovie = totalNumberOfTheMovie;
+        this.leftNumberOfTheMovie = totalNumberOfTheMovie;
+    }
+
+    public Movie(String movieIMDbNumber, String movieName, int movieReleasedYear, String directorName, String movieRating, int totalNumberOfTheMovie) {
+        this.movieIMDbNumber = movieIMDbNumber;
+        this.movieName = movieName;
+        this.movieReleasedYear = movieReleasedYear;
+        this.directorName = directorName;
+        this.movieRating = movieRating;
+        this.totalNumberOfTheMovie = totalNumberOfTheMovie;
+        this.leftNumberOfTheMovie = totalNumberOfTheMovie;
+    }
+
 
 }

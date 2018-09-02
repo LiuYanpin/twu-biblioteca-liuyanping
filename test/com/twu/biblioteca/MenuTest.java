@@ -10,6 +10,8 @@ public class MenuTest {
         Menu actualMenu = new Menu();
         assertTrue(actualMenu.ifCommandExist("List Books"));
         assertFalse(actualMenu.ifCommandExist("List"));
+        assertTrue(actualMenu.ifCommandExist("List Movies"));
+        assertFalse(actualMenu.ifCommandExist("Listsss"));
     }
 
     @Test

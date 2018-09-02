@@ -36,7 +36,6 @@ public class Library {
     public Library() {
         initialLibraryBook();
         initialLibraryMovie();
-
     }
 
     private void initialLibraryBook() {
@@ -63,27 +62,26 @@ public class Library {
     }
 
     private void initialLibraryMovie() {
-        Movie movie01 = new Movie("90001","Titanic", 1997, "James Cameron");
-        Movie movie02 = new Movie("90002", "Gone With the Wind", 1939, "Victor Fleming", "9.9");
-        Movie movie03 = new Movie("90003","Star Wars: Episode IV - A New Hope", 1977, "George Lucas", "9");
-        Movie movie04 = new Movie("90004","The Dark Knight", 2008, "Christopher Nolan", "9.1");
-        Movie movie05 = new Movie("90005","Jurassic Park", 1993, "Steven Spielberg", "8.9");
-        Movie movie06 = new Movie("90006","E. T. The Extra-Terrestrial", 1982, "Steven Spielberg");
-        Movie movie07 = new Movie("90007","Harry Potter and the Deathly Hallows, Part 2", 2011, "David Yates", "8.8");
-        Movie movie08 = new Movie("90008", "Forrest Gump", 1994, "Robert Zemeckis", "9.4");
-        Movie movie09 = new Movie("90009","Avatar", 2009, "James Cameron", "9.2");
-        Movie movie10 = new Movie("90010","Alice in Wonderland", 2010, "Tim Burton", "8.7");
-        allMovies.put(movie01.getBookIMDbNumber(), movie01);
-        allMovies.put(movie02.getBookIMDbNumber(), movie02);
-        allMovies.put(movie03.getBookIMDbNumber(), movie03);
-        allMovies.put(movie04.getBookIMDbNumber(), movie04);
-        allMovies.put(movie05.getBookIMDbNumber(), movie05);
-        allMovies.put(movie06.getBookIMDbNumber(), movie06);
-        allMovies.put(movie07.getBookIMDbNumber(), movie07);
-        allMovies.put(movie08.getBookIMDbNumber(), movie08);
-        allMovies.put(movie09.getBookIMDbNumber(), movie09);
-        allMovies.put(movie10.getBookIMDbNumber(), movie10);
-
+        Movie movie01 = new Movie("90001","Titanic", 1997, "James Cameron", 1);
+        Movie movie02 = new Movie("90002", "Gone With the Wind", 1939, "Victor Fleming", "9.9", 1);
+        Movie movie03 = new Movie("90003","Star Wars: Episode IV - A New Hope", 1977, "George Lucas", "9", 1);
+        Movie movie04 = new Movie("90004","The Dark Knight", 2008, "Christopher Nolan", "9.1", 1);
+        Movie movie05 = new Movie("90005","Jurassic Park", 1993, "Steven Spielberg", "8.9", 1);
+        Movie movie06 = new Movie("90006","E. T. The Extra-Terrestrial", 1982, "Steven Spielberg", 1);
+        Movie movie07 = new Movie("90007","Harry Potter and the Deathly Hallows, Part 2", 2011, "David Yates", "8.8", 1);
+        Movie movie08 = new Movie("90008", "Forrest Gump", 1994, "Robert Zemeckis", "9.4", 1);
+        Movie movie09 = new Movie("90009","Avatar", 2009, "James Cameron", "9.2", 1);
+        Movie movie10 = new Movie("90010","Alice in Wonderland", 2010, "Tim Burton", "8.7", 1);
+        allMovies.put(movie01.getMovieIMDbNumber(), movie01);
+        allMovies.put(movie02.getMovieIMDbNumber(), movie02);
+        allMovies.put(movie03.getMovieIMDbNumber(), movie03);
+        allMovies.put(movie04.getMovieIMDbNumber(), movie04);
+        allMovies.put(movie05.getMovieIMDbNumber(), movie05);
+        allMovies.put(movie06.getMovieIMDbNumber(), movie06);
+        allMovies.put(movie07.getMovieIMDbNumber(), movie07);
+        allMovies.put(movie08.getMovieIMDbNumber(), movie08);
+        allMovies.put(movie09.getMovieIMDbNumber(), movie09);
+        allMovies.put(movie10.getMovieIMDbNumber(), movie10);
     }
     public void getAllBookList() {
         String title = String.format("%-10s%-20s%-30s%-10s", "ISBN", "BookName", "Author", "PublishedYear");
@@ -105,8 +103,8 @@ public class Library {
         allMovies.forEach((movieName, oneMovie) -> {
             if (oneMovie.getLeftNumberOfTheMovie() != 0) {
                 String oneMovieDetail = String.format("%-10s%-50s%-20d%-20s%-10s",
-                        oneMovie.getmovieIMDbNumber(),
-                        oneMovie.getBookIMDbNumber(),
+                        oneMovie.getMovieIMDbNumber(),
+                        oneMovie.getMovieName(),
                         oneMovie.getMovieReleasedYear(),
                         oneMovie.getDirectorName(),
                         oneMovie.getMovieRating());
@@ -115,6 +113,13 @@ public class Library {
         });
     }
 
+    public boolean ifBookExist(String bookISBN) {
+        return allBooks.containsKey(bookISBN);
+    }
+
+    public boolean ifMovieExist(String movieIMDb) {
+        return allMovies.containsKey(movieIMDb);
+    }
     public String getOneBookDetailByName(String bookISBN) {
         if (allBooks.containsKey(bookISBN)) {
             Book foundBook = allBooks.get(bookISBN);
@@ -143,25 +148,45 @@ public class Library {
         return books[0];
     }
 
-    public Book checkoutOneBookByBookISDN(String bookIsbn) {
-        Book book;
+    public Book checkoutOneBookByBookISBN(String bookIsbn) {
         if (allBooks.containsKey(bookIsbn) && allBooks.get(bookIsbn).getLeftNumberOfTheBook() != 0) {
             Book originBook = allBooks.get(bookIsbn);
             originBook.setLeftNumberOfTheBook(originBook.getLeftNumberOfTheBook() - 1);
             return new Book(originBook.getBookISBN(), originBook.getBookName(),
                     originBook.getAuthor(), originBook.getYearPublished());
-        }else {
-            return null;
         }
+        return null;
+
     }
 
-    public boolean returnOneBookByBookISDN(String bookIsbn) {
+    public boolean returnOneBookByBookISBN(String bookIsbn) {
         if (allBooks.containsKey(bookIsbn)) {
             Book originBook = allBooks.get(bookIsbn);
             originBook.setLeftNumberOfTheBook(originBook.getLeftNumberOfTheBook() + 1);
             return true;
-        }else {
-            return false;
         }
+        return false;
+
     }
+
+    public Movie checkoutOneMovieByMovieIMDb(String movieIMDb) {
+        if (allMovies.containsKey(movieIMDb) && allMovies.get(movieIMDb).getLeftNumberOfTheMovie() != 0) {
+            Movie originMovie = allMovies.get(movieIMDb);
+            originMovie.setLeftNumberOfTheMovie(originMovie.getLeftNumberOfTheMovie() - 1);
+            return new Movie(originMovie.getMovieIMDbNumber(), originMovie.getMovieName(),
+                    originMovie.getMovieReleasedYear(), originMovie.getDirectorName(), originMovie.getMovieRating());
+        }
+        return null;
+
+    }
+
+    public boolean returnOneMovieByMovieIMDb(String movieIMDb) {
+        if (allMovies.containsKey(movieIMDb)) {
+            Movie originMovie = allMovies.get(movieIMDb);
+            originMovie.setLeftNumberOfTheMovie(originMovie.getLeftNumberOfTheMovie() + 1);
+            return true;
+        }
+        return false;
+    }
+
 }
