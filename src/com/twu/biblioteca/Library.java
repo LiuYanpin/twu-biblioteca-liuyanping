@@ -1,6 +1,5 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 /*
 http://language.chinadaily.com.cn/2015-12/22/content_22771415.htm
@@ -17,15 +16,30 @@ BBC评出最经久不衰的10部经典英国小说
 0010:Vanity Fair (William Makepeace Thackeray, 1848)威廉·梅克皮斯·萨克雷《名利场》，1848年出版
 String bookISBN, String bookName, String author, int yearPublished, int totalNumberOfTheBook
  */
+/*movieName, movieReleasedYear, directorName, rating
+Gone With the Wind ,(1939), Victor Fleming
+Star Wars: Episode IV - A New Hope (1977),George Lucas
+Titanic (1997), James Cameron
+The Dark Knight (2008),Christopher Nolan
+E. T. The Extra-Terrestrial (1982), Steven Spielberg
+Jurassic Park (1993),Steven Spielberg
+Harry Potter and the Deathly Hallows, Part 2 (2011),David Yates
+Forrest Gump (1994),Robert Zemeckis
+Avatar (2009)James Cameron,
+Alice in Wonderland (2010), Tim Burton
+ */
 
 public class Library {
     private HashMap<String, Book> allBooks = new HashMap<>();
+    private HashMap<String, Movie> allMovies = new HashMap<>();
 
     public Library() {
-        initialLibrary();
+        initialLibraryBook();
+        initialLibraryMovie();
+
     }
 
-    private void initialLibrary() {
+    private void initialLibraryBook() {
         Book book01 = new Book("0001", "Middlemarch", "George Eliot", 1874, 1);
         Book book02 = new Book("0002", "To the Lighthouse", "Virginia Woolf", 1927, 1);
         Book book03 = new Book("0003", "Mrs Dalloway", "Virginia Woolf", 1925, 1);
@@ -48,6 +62,29 @@ public class Library {
         allBooks.put(book10.getBookISBN(), book10);
     }
 
+    private void initialLibraryMovie() {
+        Movie movie01 = new Movie("90001","Titanic", 1997, "James Cameron");
+        Movie movie02 = new Movie("90002", "Gone With the Wind", 1939, "Victor Fleming", "9.9");
+        Movie movie03 = new Movie("90003","Star Wars: Episode IV - A New Hope", 1977, "George Lucas", "9");
+        Movie movie04 = new Movie("90004","The Dark Knight", 2008, "Christopher Nolan", "9.1");
+        Movie movie05 = new Movie("90005","Jurassic Park", 1993, "Steven Spielberg", "8.9");
+        Movie movie06 = new Movie("90006","E. T. The Extra-Terrestrial", 1982, "Steven Spielberg");
+        Movie movie07 = new Movie("90007","Harry Potter and the Deathly Hallows, Part 2", 2011, "David Yates", "8.8");
+        Movie movie08 = new Movie("90008", "Forrest Gump", 1994, "Robert Zemeckis", "9.4");
+        Movie movie09 = new Movie("90009","Avatar", 2009, "James Cameron", "9.2");
+        Movie movie10 = new Movie("90010","Alice in Wonderland", 2010, "Tim Burton", "8.7");
+        allMovies.put(movie01.getBookIMDbNumber(), movie01);
+        allMovies.put(movie02.getBookIMDbNumber(), movie02);
+        allMovies.put(movie03.getBookIMDbNumber(), movie03);
+        allMovies.put(movie04.getBookIMDbNumber(), movie04);
+        allMovies.put(movie05.getBookIMDbNumber(), movie05);
+        allMovies.put(movie06.getBookIMDbNumber(), movie06);
+        allMovies.put(movie07.getBookIMDbNumber(), movie07);
+        allMovies.put(movie08.getBookIMDbNumber(), movie08);
+        allMovies.put(movie09.getBookIMDbNumber(), movie09);
+        allMovies.put(movie10.getBookIMDbNumber(), movie10);
+
+    }
     public void getAllBookList() {
         String title = String.format("%-10s%-20s%-30s%-10s", "ISBN", "BookName", "Author", "PublishedYear");
         System.out.println(title);
@@ -62,11 +99,26 @@ public class Library {
             }
         });
     }
+    public void getAllMovieList() {
+        String title = String.format("%-10s%-50s%-20s%-20s%-10s","No.", "MovieName", "ReleasedYear", "Director", "Rating");
+        System.out.println(title);
+        allMovies.forEach((movieName, oneMovie) -> {
+            if (oneMovie.getLeftNumberOfTheMovie() != 0) {
+                String oneMovieDetail = String.format("%-10s%-50s%-20d%-20s%-10s",
+                        oneMovie.getmovieIMDbNumber(),
+                        oneMovie.getBookIMDbNumber(),
+                        oneMovie.getMovieReleasedYear(),
+                        oneMovie.getDirectorName(),
+                        oneMovie.getMovieRating());
+                System.out.println(oneMovieDetail);
+            }
+        });
+    }
 
     public String getOneBookDetailByName(String bookISBN) {
         if (allBooks.containsKey(bookISBN)) {
             Book foundBook = allBooks.get(bookISBN);
-            String bookDetail = String.format("%-20s%-30s%-10d",
+            String bookDetail = String.format("%-0s%-30s%-10d",
                     foundBook.getBookName(), foundBook.getAuthor(), foundBook.getYearPublished());
             return bookDetail;
         }else {

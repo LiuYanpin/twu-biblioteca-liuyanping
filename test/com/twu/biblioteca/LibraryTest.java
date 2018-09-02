@@ -10,4 +10,10 @@ public class LibraryTest {
         Library newLibrary = new Library();
         newLibrary.getAllBookList();
     }
+
+    @Test
+    public void should_print_movielist() {
+        Library newLibrary = new Library();
+        newLibrary.getAllMovieList();
+    }
 }
