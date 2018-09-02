@@ -37,6 +37,7 @@ public class BibliotecaApp {
                 System.out.println("If you want to Return a book, " +
                         "please input \"Return ISBN\", " +
                         "e.g. \"Return 0006\"");
+                continue;
             }else if ("Checkout".equals(customerOption.split(" ")[0])){
                 String bookISBN = customerOption.split(" ")[1];
                 Book borrowedBook = app.librarian.checkoutOneBook(bookISBN);
@@ -61,9 +62,9 @@ public class BibliotecaApp {
                 }
                 System.out.println("Please input one of the options:");
                 continue;
-            }else {
-                System.out.println("Select a valid option!");
             }
+            System.out.println("Select a valid option!");
+
         }
 
     }
