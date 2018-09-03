@@ -7,11 +7,6 @@ public class Customer {
     private String customerLibraryPassword;
     private String customerName;
     private String customerEmailAddress;
-
-    public String getCustomerPhoneNumber() {
-        return customerPhoneNumber;
-    }
-
     private String customerPhoneNumber;
     private HashMap<String, Book> borrowedBooks = new HashMap<>();
     private HashMap<String, Movie> borrowedMovies = new HashMap<>();
@@ -26,14 +21,16 @@ public class Customer {
     }
 
     public String getCustomerDetail() {
-        StringBuilder builder = new StringBuilder("Name: ")
+        StringBuilder builder = new StringBuilder("----User Information----\n")
+                .append("Name: ")
                 .append(customerName)
                 .append("\n")
                 .append("EmailAddress: ")
                 .append(customerEmailAddress)
                 .append("\n")
                 .append("PhoneNumber: ")
-                .append(customerPhoneNumber);
+                .append(customerPhoneNumber)
+                .append("\n");
         return builder.toString();
     }
 
@@ -53,6 +50,17 @@ public class Customer {
         return customerEmailAddress;
     }
 
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
+    }
+    public HashMap<String, Book> getBorrowedBooks() {
+        return borrowedBooks;
+    }
+
+    public HashMap<String, Movie> getBorrowedMovies() {
+        return borrowedMovies;
+    }
+
     public void borrowOneBook(Book book) {
         borrowedBooks.put(book.getBookISBN(), book);
     }
@@ -63,10 +71,6 @@ public class Customer {
             return true;
         }
         return false;
-    }
-
-    public boolean ifBorrowedOneBook(String bookIsbn) {
-        return borrowedBooks.containsKey(bookIsbn);
     }
 
     public void borrowOneMovie(Movie movie) {
@@ -80,9 +84,4 @@ public class Customer {
         }
         return false;
     }
-
-    public boolean ifBorrowedOneMovie(String movieIMDb) {
-        return borrowedMovies.containsKey(movieIMDb);
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 /*
 http://language.chinadaily.com.cn/2015-12/22/content_22771415.htm
@@ -83,9 +84,10 @@ public class Library {
         allMovies.put(movie09.getMovieIMDbNumber(), movie09);
         allMovies.put(movie10.getMovieIMDbNumber(), movie10);
     }
-    public void getAllBookList() {
+    public String getAllBookList() {
         String title = String.format("%-10s%-20s%-30s%-10s", "ISBN", "BookName", "Author", "PublishedYear");
-        System.out.println(title);
+        StringBuilder bookList = new StringBuilder(title).append("\n");
+        ArrayList<String> booklistArray = new ArrayList<>();
         allBooks.forEach((bookISBN, oneBook) -> {
             if (oneBook.getLeftNumberOfTheBook() != 0) {
                 String oneBookDetail = String.format("%-10s%-20s%-30s%-10d",
@@ -93,13 +95,19 @@ public class Library {
                         oneBook.getBookName(),
                         oneBook.getAuthor(),
                         oneBook.getYearPublished());
-                System.out.println(oneBookDetail);
+                booklistArray.add(oneBookDetail);
             }
         });
+        booklistArray.sort(String::compareTo);
+        booklistArray.forEach((item) -> {
+            bookList.append(item).append("\n");
+        });
+        return bookList.toString();
     }
-    public void getAllMovieList() {
+    public String getAllMovieList() {
         String title = String.format("%-10s%-50s%-20s%-20s%-10s","No.", "MovieName", "ReleasedYear", "Director", "Rating");
-        System.out.println(title);
+        StringBuilder movieList = new StringBuilder(title).append("\n");
+        ArrayList<String> movieListArray = new ArrayList<>();
         allMovies.forEach((movieName, oneMovie) -> {
             if (oneMovie.getLeftNumberOfTheMovie() != 0) {
                 String oneMovieDetail = String.format("%-10s%-50s%-20d%-20s%-10s",
@@ -108,65 +116,36 @@ public class Library {
                         oneMovie.getMovieReleasedYear(),
                         oneMovie.getDirectorName(),
                         oneMovie.getMovieRating());
-                System.out.println(oneMovieDetail);
+                movieListArray.add(oneMovieDetail);
             }
         });
-    }
-
-    public boolean ifBookExist(String bookISBN) {
-        return allBooks.containsKey(bookISBN);
-    }
-
-    public boolean ifMovieExist(String movieIMDb) {
-        return allMovies.containsKey(movieIMDb);
-    }
-    public String getOneBookDetailByName(String bookISBN) {
-        if (allBooks.containsKey(bookISBN)) {
-            Book foundBook = allBooks.get(bookISBN);
-            String bookDetail = String.format("%-0s%-30s%-10d",
-                    foundBook.getBookName(), foundBook.getAuthor(), foundBook.getYearPublished());
-            return bookDetail;
-        }else {
-            return null;
-        }
-    }
-
-    public Book checkoutOneBookByBookName(String bookName) {
-        Book[] books = new Book[1];
-        allBooks.forEach((bookisbn, oneBook) -> {
-            if (oneBook.getLeftNumberOfTheBook()!=0 && oneBook.getBookName() == bookName) {
-                books[0] = new Book(oneBook.getBookISBN(),
-                        oneBook.getBookName(),
-                        oneBook.getAuthor(),
-                        oneBook.getYearPublished(),
-                        oneBook.getTotalNumberOfTheBook());
-                oneBook.setLeftNumberOfTheBook(oneBook.getLeftNumberOfTheBook()-1);
-            }else {
-                books[0] = null;
-            }
+        movieListArray.sort(String::compareTo);
+        movieListArray.forEach((item) -> {
+            movieList.append(item).append("\n");
         });
-        return books[0];
+        return movieList.toString();
     }
 
-    public Book checkoutOneBookByBookISBN(String bookIsbn) {
-        if (allBooks.containsKey(bookIsbn) && allBooks.get(bookIsbn).getLeftNumberOfTheBook() != 0) {
-            Book originBook = allBooks.get(bookIsbn);
+    public Book checkoutOneBookByBookISBN(String bookISBN) {
+        if (allBooks.containsKey(bookISBN) && allBooks.get(bookISBN).getLeftNumberOfTheBook() != 0) {
+            Book originBook = allBooks.get(bookISBN);
             originBook.setLeftNumberOfTheBook(originBook.getLeftNumberOfTheBook() - 1);
             return new Book(originBook.getBookISBN(), originBook.getBookName(),
                     originBook.getAuthor(), originBook.getYearPublished());
         }
         return null;
-
     }
 
-    public boolean returnOneBookByBookISBN(String bookIsbn) {
-        if (allBooks.containsKey(bookIsbn)) {
-            Book originBook = allBooks.get(bookIsbn);
+    public boolean returnOneBookByBookISBN(String bookISBN) {
+        if (allBooks.containsKey(bookISBN)) {
+            Book originBook = allBooks.get(bookISBN);
+            if (allBooks.get(bookISBN).getTotalNumberOfTheBook() == allBooks.get(bookISBN).getLeftNumberOfTheBook()) {
+                return false;
+            }
             originBook.setLeftNumberOfTheBook(originBook.getLeftNumberOfTheBook() + 1);
             return true;
         }
         return false;
-
     }
 
     public Movie checkoutOneMovieByMovieIMDb(String movieIMDb) {
@@ -183,6 +162,9 @@ public class Library {
     public boolean returnOneMovieByMovieIMDb(String movieIMDb) {
         if (allMovies.containsKey(movieIMDb)) {
             Movie originMovie = allMovies.get(movieIMDb);
+            if (originMovie.getTotalNumberOfTheMovie() == originMovie.getLeftNumberOfTheMovie()) {
+                return false;
+            }
             originMovie.setLeftNumberOfTheMovie(originMovie.getLeftNumberOfTheMovie() + 1);
             return true;
         }

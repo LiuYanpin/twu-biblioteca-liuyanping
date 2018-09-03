@@ -7,15 +7,13 @@ public class BibliotecaApp {
     private Menu allMenu;
     private Librarian librarian;
 
-    {
-        System.out.println("Welcome to the library!");
-        Library publicLibrary = new Library();
-        allMenu = new Menu(publicLibrary);
-        librarian = new Librarian(publicLibrary);
-    }
-
     public BibliotecaApp() {
-
+        System.out.println("*********************************");
+        System.out.println("     Welcome to the library!");
+        System.out.println("*********************************\n");
+        Library publicLibrary = new Library();
+        this.allMenu = new Menu(publicLibrary);
+        this.librarian = new Librarian(publicLibrary);
     }
 
     public boolean ifCustomerLibraryNumberExist(String customerLibraryNumber) {
@@ -30,30 +28,20 @@ public class BibliotecaApp {
         return librarian.getOneCustomerByLibraryNumber(customerLibraryNumber);
     }
 
-    public String getNewLibraryNumber() {
-        return librarian.generatorOneNewLibraryNumber();
-    }
-
-    public boolean createOneNewCustomer(String customerLibraryNumber,
-                                         String customerLibraryPassword,
-                                         String customerName,
-                                         String customerEmailAddress,
-                                         String customerPhoneNumber) {
-        return librarian.createOneCustomer(customerLibraryNumber,
-                customerLibraryPassword, customerName, customerEmailAddress, customerPhoneNumber);
-
+    public void getCustomerDetail(Customer currentCustomer) {
+        System.out.println(librarian.getCustomerDetail(currentCustomer));
     }
 
     public void getMenuList() {
-        allMenu.getAllMenuList();
+        System.out.println(allMenu.getAllMenuList());
     }
 
     public boolean ifOptionExist(String customerOption) {
         return allMenu.ifCommandExist(customerOption);
     }
 
-    public boolean afterChooseOneOption(String customerOption) {
-        return allMenu.afterChooseOneCommand(customerOption);
+    public void afterChooseOneOption(String customerOption) {
+        allMenu.afterChooseOneCommand(customerOption);
     }
 
     public Book checkOneBookFormLibrary(String bookISBN) {
@@ -93,9 +81,9 @@ public class BibliotecaApp {
                 String customerPassword = scanner.nextLine();
                 if (app.ifCustomerPasswordCorrect(customerLibraryNumber, customerPassword)) {
                     currentCustomer = app.getOneCustomerByLibraryNumber(customerLibraryNumber);
-                    System.out.println(currentCustomer.getCustomerDetail());
+                    app.getCustomerDetail(currentCustomer);
                 }else {
-                    System.out.println("Your password is not correct!");
+                    System.out.println("Your password is NOT correct! Please try again.\n");
                     continue;
                 }
             }else if ("Quit".equals(customerLibraryNumber)) {
@@ -115,78 +103,61 @@ public class BibliotecaApp {
                 if ("Quit".equals(customerOption)) {
                     System.out.println("You have logged out! Goodbye! See you later!");
                     break;
-                }
-                if (!app.ifOptionExist(customerOption)) {
+                }else if (!app.ifOptionExist(customerOption)) {
                     System.out.println("Select a valid option!");
                     continue;
                 }
-                if (!app.afterChooseOneOption(customerOption)) {
+                app.afterChooseOneOption(customerOption);
+                if ("List Books".equals(customerOption) || "List Movies".equals(customerOption)) {
                     continue;
                 }
-                String customerCheckOption = optionScanner.nextLine();
-                String checkoutPattern = "^(Checkout|Return)\\s(Book|Movie)\\s\\d{4,5}$";
-
-                if (!Pattern.matches(checkoutPattern, customerCheckOption)) {
-                    System.out.println("Please input a valid option!");
+                String customerInputNumber = optionScanner.nextLine();
+                String checkoutPattern = "^\\d{4,5}$";
+                if (!Pattern.matches(checkoutPattern, customerInputNumber)) {
+                    System.out.println("Please input a valid number!");
                     continue;
                 }
-                if ("Checkout".equals(customerCheckOption.split(" ")[0])){
-                    if ("Book".equals(customerCheckOption.split(" ")[1])) {
-                        String bookISBN = customerCheckOption.split(" ")[2];
-                        Book borrowedBook = app.checkOneBookFormLibrary(bookISBN);
-                        if (borrowedBook != null) {
-                            currentCustomer.borrowOneBook(borrowedBook);
-                            System.out.println("Thank you! Enjoy the book!");
-                        }else {
-                            System.out.println("That book is not available.");
-                        }
-                        continue;
-                    }else if ("Movie".equals(customerCheckOption.split(" ")[1])) {
-                        String movieIMDb = customerCheckOption.split(" ")[2];
-                        Movie borrowedMovie = app.checkOneMovieFormLibrary(movieIMDb);
-                        if (borrowedMovie != null) {
-                            currentCustomer.borrowOneMovie(borrowedMovie);
-                            System.out.println("Thank you! Enjoy the movie!");
-                        }else {
-                            System.out.println("That movie is not available.");
-                        }
-                        continue;
+                if ("Checkout Book".equals(customerOption) && Pattern.matches("^\\d{4}$", customerInputNumber)) {
+                    Book borrowedBook = app.checkOneBookFormLibrary(customerInputNumber);
+                    if (borrowedBook != null) {
+                        currentCustomer.borrowOneBook(borrowedBook);
+                        System.out.println("Thank you! Enjoy the book!");
                     }else {
-                        System.out.println("Please input a valid option!");
+                        System.out.println("That book is not available.");
                     }
                     continue;
-                }else if ("Return".equals(customerCheckOption.split(" ")[0])) {
-                    if ("Book".equals(customerCheckOption.split(" ")[1])) {
-                        String bookISBN = customerCheckOption.split(" ")[2];
-                        if (!app.ifCustomerCanReturnOneBook(currentCustomer, bookISBN)) {
-                            System.out.println("You didn't borrow this book, so you don't need to return this book.");
-                            continue;
-                        }
-                        if (app.returnOneBook(currentCustomer, bookISBN)) {
-                            System.out.println("Thank you for returning the book.");
-                        }else {
-                            System.out.println("That is not a valid book to return.");
-                        }
-                    }else if ("Movie".equals(customerCheckOption.split(" ")[1])) {
-                        String movieIMDb = customerCheckOption.split(" ")[2];
-                        if (!app.ifCustomerCanReturnOneMovie(currentCustomer, movieIMDb)) {
-                            System.out.println("You didn't borrow this movie, so you don't need to return this movie.");
-                            continue;
-                        }
-                        if (app.returnOneMovie(currentCustomer, movieIMDb)) {
-                            System.out.println("Thank you for returning the movie.");
-                        }else {
-                            System.out.println("That is not a valid movie to return.");
-                        }
+                }else if ("Checkout Movie".equals(customerOption) && Pattern.matches("^\\d{5}$", customerInputNumber)) {
+                    Movie borrowedMovie = app.checkOneMovieFormLibrary(customerInputNumber);
+                    if (borrowedMovie != null) {
+                        currentCustomer.borrowOneMovie(borrowedMovie);
+                        System.out.println("Thank you! Enjoy the movie!");
                     }else {
-                        System.out.println("Please input a valid option!");
+                        System.out.println("That movie is not available.");
                     }
                     continue;
-                }else if ("Quit".equals(customerCheckOption)) {
+                }else if ("Return Book".equals(customerOption) && Pattern.matches("^\\d{4}$", customerInputNumber)) {
+                    if (!app.ifCustomerCanReturnOneBook(currentCustomer, customerInputNumber)) {
+                        System.out.println("You didn't borrow this book, so you don't need to return this book.");
+                        continue;
+                    }
+                    if (app.returnOneBook(currentCustomer, customerInputNumber)) {
+                        System.out.println("Thank you for returning the book.");
+                    }else {
+                        System.out.println("That is not a valid book to return.");
+                    }
+                    continue;
+                }else if ("Return Movie".equals(customerOption) && Pattern.matches("^\\d{5}$", customerInputNumber)) {
+                    if (!app.ifCustomerCanReturnOneMovie(currentCustomer, customerInputNumber)) {
+                        System.out.println("You didn't borrow this movie, so you don't need to return this movie.");
+                        continue;
+                    }
+                    if (app.returnOneMovie(currentCustomer, customerInputNumber)) {
+                        System.out.println("Thank you for returning the movie.");
+                    }else {
+                        System.out.println("That is not a valid movie to return.");
+                    }
                     continue;
                 }
-                System.out.println("Please input a valid option!");
-                continue;
             }
         }
     }

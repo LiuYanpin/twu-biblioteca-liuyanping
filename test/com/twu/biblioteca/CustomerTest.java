@@ -23,7 +23,7 @@ public class CustomerTest {
                 "1qaz2wsx", "Alice",
                 "alice@163.com", "0100" );
         String actual = customer.getCustomerDetail();
-        assertEquals("Name: Alice\nEmailAddress: alice@163.com\nPhoneNumber: 0100", actual);
+        assertEquals("----User Information----\nName: Alice\nEmailAddress: alice@163.com\nPhoneNumber: 0100\n", actual);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class CustomerTest {
                 "1qaz2wsx", "Alice",
                 "alice@163.com", "0100" );
         customer.borrowOneBook(book);
-        assertTrue(customer.ifBorrowedOneBook("0101"));
+        assertTrue(customer.getBorrowedBooks().containsKey("0101"));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CustomerTest {
                 "1qaz2wsx", "Alice",
                 "alice@163.com", "0100" );
         customer.borrowOneMovie(movie);
-        assertTrue(customer.ifBorrowedOneMovie("0001"));
+        assertTrue(customer.getBorrowedMovies().containsKey("0001"));
         assertTrue(customer.returnOneMovie("0001"));
         assertFalse(customer.returnOneMovie("0001"));
     }

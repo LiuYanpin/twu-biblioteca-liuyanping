@@ -1,3 +1,16 @@
+================================================
+##start
+Go to File -> BibliotecaApp.js
+Go to main method -> Ctrl+Shift+R to Run the App.
+##Test Users
+UserName:
+001-0001
+~
+001-0005
+Password:
+1qaz2wsx
+
+=================================================
 Instructions to push your code to code.google.com
 =================================================
 1. Sign into GitHub and create a new repository
@@ -27,16 +40,6 @@ Instructions to open your code in Intellij
 2. Select the directory containing the code
 DONE !
 
-==========================================
-##start
-Go to File -> BibliotecaApp.js
-Go to mail -> Ctrl+Shift+R to Run the App.
-##Test Users
-UserName:
-001-0001
-~
-001-0005
-Password:
-1qaz2wsx
+
 
 

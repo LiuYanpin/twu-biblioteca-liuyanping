@@ -6,15 +6,13 @@ public class Menu {
     private ArrayList<String> allCommands = new ArrayList<>();
     private Library publicLibrary;
 
-    public Menu() {
-        allCommands.add("List Books");
-        allCommands.add("List Movies");
-        allCommands.add("Quit");
-    }
-
     public Menu(Library publicLibrary) {
         allCommands.add("List Books");
         allCommands.add("List Movies");
+        allCommands.add("Checkout Book");
+        allCommands.add("Checkout Movie");
+        allCommands.add("Return Book");
+        allCommands.add("Return Movie");
         allCommands.add("Quit");
         this.publicLibrary = publicLibrary;
     }
@@ -23,42 +21,37 @@ public class Menu {
         return allCommands.contains(customerCommand);
     }
 
-    public void getAllMenuList() {
-        for (int i = 0; i < allCommands.size(); i++) {
-            System.out.println(allCommands.get(i));
-        }
+    public String getAllMenuList() {
+        StringBuilder menuList = new StringBuilder();
+        allCommands.forEach((item) -> menuList.append(item).append("\n"));
+        return menuList.toString();
     }
 
-    public boolean afterChooseOneCommand(String customerCommand) {
-        if ("Quit".equals(customerCommand)) {
-            System.exit(1);
-            return false;
-        }else if ("List Books".equals(customerCommand)) {
-            publicLibrary.getAllBookList();
-            System.out.println("If you want to Checkout a book, " +
-                    "please input \"Checkout Book ISBN\", " +
-                    "e.g. \"Checkout Book 0006\"");
-            System.out.println("If you want to Return a book, " +
-                    "please input \"Return Book ISBN\", " +
-                    "e.g. \"Return Book 0006\"");
-            System.out.println("Input \"Quit\" to the options page.");
-            return true;
-        }else if ("List Movies".equals(customerCommand)) {
-            publicLibrary.getAllMovieList();
-            System.out.println("If you want to Checkout a movie, " +
-                    "please input \"Checkout Movie No.\", " +
-                    "e.g. \"Checkout Movie 90001\"");
-            System.out.println("If you want to Return a movie, " +
-                    "please input \"Return Movie No.\", " +
-                    "e.g. \"Return Movie 90001\"");
-            System.out.println("Input \"Quit\" to the options page.");
-            return true;
-        }else {
-            System.out.println("Select a valid option!");
-            return false;
+    public void afterChooseOneCommand(String customerCommand) {
+        switch (customerCommand) {
+            case "Quit":
+                break;
+            case "List Books":
+                System.out.println(publicLibrary.getAllBookList());
+                break;
+            case "List Movies":
+                System.out.println(publicLibrary.getAllMovieList());
+                break;
+            case "Checkout Book":
+                System.out.println("Please input ISBN of the book. e.g. \"0001\"");
+                break;
+            case "Checkout Movie":
+                System.out.println("Please input number of the movie. e.g. \"90001\"");
+                break;
+            case "Return Book":
+                System.out.println("Please input ISBN of the book. e.g. \"0001\"");
+                break;
+            case "Return Movie":
+                System.out.println("Please input number of the movie. e.g. \"90001\"");
+                break;
+            default:
+                break;
         }
-
-
     }
 
 }

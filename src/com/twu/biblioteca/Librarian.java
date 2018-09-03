@@ -3,13 +3,9 @@ package com.twu.biblioteca;
 import java.util.HashMap;
 
 public class Librarian {
-    private int librarianID;
     private Library publicLibrary;
     private HashMap<String, Customer> allCustomers = new HashMap<>();
-    private int currentCustomerNumber = 0;
 
-    public Librarian() {
-    }
     public Librarian(Library publicLibrary) {
         this.publicLibrary = publicLibrary;
         initialCustomer();
@@ -27,54 +23,33 @@ public class Librarian {
         allCustomers.put(customer4.getCustomerLibraryNumber(), customer4);
         allCustomers.put(customer5.getCustomerLibraryNumber(), customer5);
     }
-    public int getLibrarianID() {
-        return librarianID;
-    }
-    public void setLibrarianID(int librarianID) {
-        this.librarianID = librarianID;
-    }
 
     public boolean checkIfCustomerExist(String customerLibraryNumber) {
         return allCustomers.containsKey(customerLibraryNumber);
     }
     public boolean checkIfCustomerPasswordCorrect(String customerLibraryNumber, String customerPassword) {
-        return allCustomers.get(customerLibraryNumber).getCustomerLibraryPassword().equals(customerPassword);
+        return allCustomers.containsKey(customerLibraryNumber)
+                && allCustomers.get(customerLibraryNumber).getCustomerLibraryPassword().equals(customerPassword);
     }
 
     public Customer getOneCustomerByLibraryNumber(String customerLibraryNumber) {
-        return allCustomers.get(customerLibraryNumber);
-    }
-
-    public String generatorOneNewLibraryNumber() {
-        return customerLibraryNumberGenerator();
-    }
-
-    public boolean createOneCustomer(String customerLibraryNumber,
-                                      String customerLibraryPassword,
-                                   String customerName,
-                                   String customerEmailAddress,
-                                   String customerPhoneNumber) {
-        try {
-            Customer newCustomer = new Customer(customerLibraryNumber,
-                    customerLibraryPassword, customerName, customerEmailAddress, customerPhoneNumber);
-            allCustomers.put(customerLibraryNumber, newCustomer);
-            return true;
-        }catch (Exception e) {
-            return false;
+        if (allCustomers.containsKey(customerLibraryNumber)) {
+            return allCustomers.get(customerLibraryNumber);
         }
+        return null;
+    }
 
-    }
     public boolean ifCustomerCanReturnOneBook(Customer customer, String bookISBN) {
-        return customer.ifBorrowedOneBook(bookISBN);
+        return customer.getBorrowedBooks().containsKey(bookISBN);
     }
-    public Book checkoutOneBook(String bookIsbn) {
-        return publicLibrary.checkoutOneBookByBookISBN(bookIsbn);
+    public Book checkoutOneBook(String bookISBN) {
+        return publicLibrary.checkoutOneBookByBookISBN(bookISBN);
     }
-    public boolean returnOneBook(Customer currentCustomer, String bookIsbn) {
-        return publicLibrary.returnOneBookByBookISBN(bookIsbn) && currentCustomer.returnOneBook(bookIsbn);
+    public boolean returnOneBook(Customer currentCustomer, String bookISBN) {
+        return publicLibrary.returnOneBookByBookISBN(bookISBN) && currentCustomer.returnOneBook(bookISBN);
     }
     public boolean ifCustomerCanReturnOneMovie(Customer customer, String movieIMDb) {
-        return customer.ifBorrowedOneMovie(movieIMDb);
+        return customer.getBorrowedMovies().containsKey(movieIMDb);
     }
     public Movie checkoutOneMovie(String movieIMDb) {
         return publicLibrary.checkoutOneMovieByMovieIMDb(movieIMDb);
@@ -82,8 +57,8 @@ public class Librarian {
     public boolean returnOneMovie(Customer currentCustomer, String movieIMDb) {
         return publicLibrary.returnOneMovieByMovieIMDb(movieIMDb) && currentCustomer.returnOneMovie(movieIMDb);
     }
-    private String customerLibraryNumberGenerator() {
-        currentCustomerNumber++;
-        return String.format("001-%04d", currentCustomerNumber);
+
+    public String getCustomerDetail(Customer customer) {
+        return customer.getCustomerDetail();
     }
 }

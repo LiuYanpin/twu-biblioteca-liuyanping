@@ -9,52 +9,26 @@ public class Movie {
     private int totalNumberOfTheMovie;
     private int leftNumberOfTheMovie;
 
-    public String getMovieIMDbNumber() {
-        return movieIMDbNumber;
-    }
-
-    public void setMovieIMDbNumber(String movieIMDbNumber) {
-        this.movieIMDbNumber = movieIMDbNumber;
-    }
+    public String getMovieIMDbNumber() { return movieIMDbNumber; }
 
     public String getMovieName() {
         return movieName;
-    }
-
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
     }
 
     public int getMovieReleasedYear() {
         return movieReleasedYear;
     }
 
-    public void setMovieReleasedYear(int movieReleasedYear) {
-        this.movieReleasedYear = movieReleasedYear;
-    }
-
     public String getDirectorName() {
         return directorName;
-    }
-
-    public void setDirectorName(String directorName) {
-        this.directorName = directorName;
     }
 
     public String getMovieRating() {
         return movieRating;
     }
 
-    public void setMovieRating(String movieRating) {
-        this.movieRating = movieRating;
-    }
-
     public int getTotalNumberOfTheMovie() {
         return totalNumberOfTheMovie;
-    }
-
-    public void setTotalNumberOfTheMovie(int totalNumberOfTheMovie) {
-        this.totalNumberOfTheMovie = totalNumberOfTheMovie;
     }
 
     public int getLeftNumberOfTheMovie() {

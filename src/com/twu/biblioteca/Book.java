@@ -13,6 +13,8 @@ public class Book {
         this.bookName = bookName;
         this.author = author;
         this.yearPublished = yearPublished;
+        this.totalNumberOfTheBook = 1;
+        this.leftNumberOfTheBook = 1;
     }
     public Book(String bookISBN, String bookName, String author, int yearPublished, int totalNumberOfTheBook) {
         this.bookISBN = bookISBN;
