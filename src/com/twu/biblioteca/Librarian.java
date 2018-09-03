@@ -70,8 +70,8 @@ public class Librarian {
     public Book checkoutOneBook(String bookIsbn) {
         return publicLibrary.checkoutOneBookByBookISBN(bookIsbn);
     }
-    public boolean returnOneBook(String bookIsbn) {
-        return publicLibrary.returnOneBookByBookISBN(bookIsbn);
+    public boolean returnOneBook(Customer currentCustomer, String bookIsbn) {
+        return publicLibrary.returnOneBookByBookISBN(bookIsbn) && currentCustomer.returnOneBook(bookIsbn);
     }
     public boolean ifCustomerCanReturnOneMovie(Customer customer, String movieIMDb) {
         return customer.ifBorrowedOneMovie(movieIMDb);
@@ -79,8 +79,8 @@ public class Librarian {
     public Movie checkoutOneMovie(String movieIMDb) {
         return publicLibrary.checkoutOneMovieByMovieIMDb(movieIMDb);
     }
-    public boolean returnOneMovie(String movieIMDb) {
-        return publicLibrary.returnOneMovieByMovieIMDb(movieIMDb);
+    public boolean returnOneMovie(Customer currentCustomer, String movieIMDb) {
+        return publicLibrary.returnOneMovieByMovieIMDb(movieIMDb) && currentCustomer.returnOneMovie(movieIMDb);
     }
     private String customerLibraryNumberGenerator() {
         currentCustomerNumber++;

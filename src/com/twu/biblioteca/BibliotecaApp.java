@@ -72,12 +72,12 @@ public class BibliotecaApp {
         return librarian.ifCustomerCanReturnOneMovie(customer, movieIMDb);
     }
 
-    public boolean returnOneBook(String bookISBN) {
-        return librarian.returnOneBook(bookISBN);
+    public boolean returnOneBook(Customer currentCustomer, String bookISBN) {
+        return librarian.returnOneBook(currentCustomer, bookISBN);
     }
 
-    public boolean returnOneMovie(String movieIMDb) {
-        return librarian.returnOneMovie(movieIMDb);
+    public boolean returnOneMovie(Customer currentCustomer, String movieIMDb) {
+        return librarian.returnOneMovie(currentCustomer, movieIMDb);
     }
 
     public void startLibraryApp(BibliotecaApp app) {
@@ -86,20 +86,18 @@ public class BibliotecaApp {
             System.out.println("Please input your LibraryNumber: (input \"Quit\" to exit the system)");
             Scanner scanner = new Scanner(System.in);
             String customerLibraryNumber = scanner.nextLine();
-            if (app.ifCustomerLibraryNumberExist(customerLibraryNumber)) {
-                while (true) {
-                    System.out.println("Please input your password: ");
-                    String customerPassword = scanner.nextLine();
-                    if (app.ifCustomerPasswordCorrect(customerLibraryNumber, customerPassword)) {
-                        currentCustomer = app.getOneCustomerByLibraryNumber(customerLibraryNumber);
-                        currentCustomer.getCustomerDetail();
-                        break;
-                    }else {
-                        System.out.println("Your password is not correct!");
-                        continue;
-                    }
+            String libraryNumberPattern = "^\\d{3}-\\d{4}$";
+            if (Pattern.matches(libraryNumberPattern, customerLibraryNumber) &&
+                    app.ifCustomerLibraryNumberExist(customerLibraryNumber)) {
+                System.out.println("Please input your password: ");
+                String customerPassword = scanner.nextLine();
+                if (app.ifCustomerPasswordCorrect(customerLibraryNumber, customerPassword)) {
+                    currentCustomer = app.getOneCustomerByLibraryNumber(customerLibraryNumber);
+                    System.out.println(currentCustomer.getCustomerDetail());
+                }else {
+                    System.out.println("Your password is not correct!");
+                    continue;
                 }
-
             }else if ("Quit".equals(customerLibraryNumber)) {
                 System.out.println("Goodbye!");
                 break;
@@ -107,9 +105,10 @@ public class BibliotecaApp {
                 System.out.println("LibraryNumber does not exit.");
                 continue;
             }
+
             while (true) {
                 Scanner optionScanner = new Scanner(System.in);
-                System.out.println("-------------------------------------");
+                System.out.println("------------------------------------------------------------");
                 System.out.println("Please input one of the options: (Input \"Quit\" to log out)");
                 app.getMenuList();
                 String customerOption = optionScanner.nextLine();
@@ -128,7 +127,7 @@ public class BibliotecaApp {
                 String checkoutPattern = "^(Checkout|Return)\\s(Book|Movie)\\s\\d{4,5}$";
 
                 if (!Pattern.matches(checkoutPattern, customerCheckOption)) {
-                    System.out.println("Not right.Please input a valid option!");
+                    System.out.println("Please input a valid option!");
                     continue;
                 }
                 if ("Checkout".equals(customerCheckOption.split(" ")[0])){
@@ -163,7 +162,7 @@ public class BibliotecaApp {
                             System.out.println("You didn't borrow this book, so you don't need to return this book.");
                             continue;
                         }
-                        if (app.returnOneBook(bookISBN)) {
+                        if (app.returnOneBook(currentCustomer, bookISBN)) {
                             System.out.println("Thank you for returning the book.");
                         }else {
                             System.out.println("That is not a valid book to return.");
@@ -174,7 +173,7 @@ public class BibliotecaApp {
                             System.out.println("You didn't borrow this movie, so you don't need to return this movie.");
                             continue;
                         }
-                        if (app.returnOneMovie(movieIMDb)) {
+                        if (app.returnOneMovie(currentCustomer, movieIMDb)) {
                             System.out.println("Thank you for returning the movie.");
                         }else {
                             System.out.println("That is not a valid movie to return.");
